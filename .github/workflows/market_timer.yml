@@ -2,10 +2,9 @@ name: Morning Market Data Refresh Engine
 
 on:
   schedule:
-    # Forces execution to run at exactly 09:00 AM New York Time on weekdays
-    - cron: '0 9 * * 1-5'
-      timezone: 'America/New_York'
-  workflow_dispatch: # Allows you to manually trigger it whenever you want
+    # Executes daily at exactly 13:00 UTC (Which maps directly to 09:00 AM New York EST)
+    - cron: '0 13 * * 1-5'
+  workflow_dispatch: # Allows you to manually trigger it via the website dashboard anytime
 
 jobs:
   refresh-levels:
@@ -24,4 +23,3 @@ jobs:
 
       - name: Run Pre-Market Scraper Execution
         run: python scraper.py
-
