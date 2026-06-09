@@ -1,0 +1,27 @@
+name: Morning Market Data Refresh Engine
+
+on:
+  schedule:
+    # Forces execution to run at exactly 09:00 AM New York Time on weekdays
+    - cron: '0 9 * * 1-5'
+      timezone: 'America/New_York'
+  workflow_dispatch: # Allows you to manually trigger it whenever you want
+
+jobs:
+  refresh-levels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repository Code
+        uses: actions/checkout@v3
+
+      - name: Initialize Free Python Runtime Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install System HTTP Transport Packages
+        run: pip install yfinance
+
+      - name: Run Pre-Market Scraper Execution
+        run: python scraper.py
+
